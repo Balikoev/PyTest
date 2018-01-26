@@ -8,7 +8,7 @@ class RedDotsCanvas(object):
     It draws red dots on canvas.
     In case of mouseclick it starts to draw selected dot in green color.
     """
-    def __init__(self, width: int, height: int, dot_size: int = 1, refresh_rate: int = 1000):
+    def __init__(self, width: int, height: int, dot_size: int = 1, refresh_rate: int = 100):
         """
         Constructor of.
         :param width: Width of screen in pixels.
@@ -51,19 +51,11 @@ class RedDotsCanvas(object):
         return r
 
     def __draw(self):
-        """
-        Draw screen depends of internally generated data
-        :return:
-        """
+
         self.__canvas.delete("all")
-        for i in range(0, self.__virtual_size[0]):
-            for j in range(0, self.__virtual_size[1]):
-                color_mask = "#00%02x00" if (i, j) in self.__clicked_dots else "#%02x0000"
-                color_value = int(255 * self.__buffer[i][j])
-                x = i * self.__dot_size
-                y = j * self.__dot_size
-                self.__canvas.create_rectangle(x, y, x + self.__dot_size, y + self.__dot_size,
-                                               fill=color_mask % color_value)
+        for i in range(0, 360):
+            self.__canvas.create_line(randrange(10,self.__real_size[0]), randrange(10,self.__real_size[0]), randrange(10,self.__real_size[0]), randrange(10,self.__real_size[0]), width = 8)
+
         self.__canvas.update()
 
     def __event_canvas_mouseclick(self, event):
@@ -87,4 +79,4 @@ class RedDotsCanvas(object):
         self.__window.after(self.__refresh_rate, self.__run)
 
 
-red_dots_canvas = RedDotsCanvas(200, 200, 10)
+win  = RedDotsCanvas(800, 800, 8, 10)
